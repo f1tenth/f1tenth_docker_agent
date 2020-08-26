@@ -13,8 +13,10 @@ In the next few sections, we'll go over what you'll need to install to get start
 
 ## Installing Dependencies
 ### Docker
+Currently, only docker on Ubuntu is officially tested and supported. To install Docker Engine on Ubuntu, follow the guide [here](https://docs.docker.com/engine/install/ubuntu/). You can then follow the steps [here](https://docs.docker.com/engine/install/linux-postinstall/) to configure Linux hosts to work better with Docker. Without these post-installation steps, ```sudo``` will be needed every time the ```docker``` command is ran.
 
 ### Docker Compose
+Compose is a tool for defining and running multi-container Docker applications. With Compose, you can use a YAML file to configure and bring up multiple Docker containers. This will become very handy when we need to configure and bring up the simulation container and the agent containers. You can install Compose following the steps [here](https://docs.docker.com/compose/install/) after you've installed the Docker engine.
 
 ## Setting up a race locally
 
