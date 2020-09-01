@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+
+  sim:
+    container_name: sim
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    stdin_open: true
+    networks_mode: "host"
+
+  agent1:
+    container_name: agent1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    networks_mode: "host"
+
+  agent2:
+    container_name: agent2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    networks_mode: "host"

@@ -43,6 +43,16 @@ You could also use the ```RUN``` syntax to clone a Github repo of your package i
 ### Creating an entry point command
 Either ```CMD``` or ```ENTRYPOINT``` could be used to define an entrypoint command that gets executed when the container is brought up. You can find more detials on how the two commands interact [here](https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact).
 
+In the template dockerfile, ```CMD``` is used as an example to use a ROS launch file as the entry point command to the container.
+
 ## Setting up a race locally
+For all the benchmarks, we'll be using docker compose to configure and bring up the docker containers. You can find an overview of docker compose [here](https://docs.docker.com/compose/).
+
+To set up this repo to work with the ```f1tenth_gym_ros``` repo, clone this repo into the ```f1tenth_gym_ros``` directory. Then follow specific instructions in each of the following section to build and bring up the containers.
+
+### Benchmark I: Single Vehicle Timed Trials
+To test this race scenario, you'll need to use the ```master``` branch of the ```f1tenth_gym_ros``` repo.
+### Benchmark II: Single Vehicle Obstacle Avoidance
+### Benchmark III: Two Vehicle Head-to-head
 
 ## Submitting your agent
