@@ -51,8 +51,23 @@ For all the benchmarks, we'll be using docker compose to configure and bring up 
 To set up this repo to work with the ```f1tenth_gym_ros``` repo, clone this repo into the ```f1tenth_gym_ros``` directory. Then follow specific instructions in each of the following section to build and bring up the containers.
 
 ### Benchmark I: Single Vehicle Timed Trials
-To test this race scenario, you'll need to use the ```master``` branch of the ```f1tenth_gym_ros``` repo.
+To test this race scenario, you'll need to checkout the ```master``` branch of the ```f1tenth_gym_ros``` repo by running ```git checkout master``` in the ```f1tenth_gym_ros``` directory before you build the containers.
+
 ### Benchmark II: Single Vehicle Obstacle Avoidance
+For this scenario, you can follow all the steps mentioned in Benchmark I, and add in a step to change the map used in the simulation following the steps mentioned [here](https://github.com/f1tenth/f1tenth_gym_ros#changing-maps) before you build and bring up the containers.
+
 ### Benchmark III: Two Vehicle Head-to-head
+To test this race scenario, you'll need to checkout the ```multi_node``` branch of the ```f1tenth_gym_ros``` repo by running ```git checkout multi_node``` in the ```f1tenth_gym_ros``` directory before you build the containers.
 
 ## Submitting your agent
+### Setting up DockerHub
+We'll be using DockerHub to host and submit your docker images. There are two ways to host a docker image on DockerHub and we'll go over both of them.
+
+First of all, you'll need to create an account [here](https://hub.docker.com/signup). Then you can follow the Quick Start guide [here](https://docs.docker.com/docker-hub/) to use the first method to host your image on DockerHub with ```docker push```.
+
+You could also set up automated builds following the guide [here](https://docs.docker.com/docker-hub/builds/).
+
+Note that with automated builds, your Dockerfile is transparent on public repositories to other users. If you wish to have your source code hidden, use ```docker push```.
+
+### Submitting your docker image
+A submission portal (for IROS 2020) will be open at [this event page](https://iros2020.f1tenth.org). You'll need to provide to assigned unique submission passcode and your DockerHub repo link.
