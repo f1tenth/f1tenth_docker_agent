@@ -2,26 +2,28 @@ version: '3.7'
 
 services:
 
+  # Simulation containers, not that all containers brought up will be using host network for easier ROS integration
   sim:
     container_name: sim
     build:
       context: ..
-      dockerfile: Dockerfile
+      dockerfile: sim.Dockerfile
     stdin_open: true
-    networks_mode: "host"
+    network_mode: "host"
 
+  # Agent containers, in t he same network with the sim. Agent 1 and 2 are identical here, replace the dockerfile for your own agents
   agent1:
     container_name: agent1
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: agent.Dockerfile
     stdin_open: true
-    networks_mode: "host"
+    network_mode: "host"
 
   agent2:
     container_name: agent2
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: agent.Dockerfile
     stdin_open: true
-    networks_mode: "host"
+    network_mode: "host"

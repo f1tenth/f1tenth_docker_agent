@@ -11,7 +11,8 @@ RUN apt-get install -y git \
                        build-essential \
                        cmake \
                        vim \
-                       ros-melodic-ackermann-msgs
+                       ros-melodic-ackermann-msgs \
+                       ros-melodic-genpy
 
 # Upgrade pip
 RUN pip install --upgrade pip
