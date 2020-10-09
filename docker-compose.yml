@@ -10,6 +10,16 @@ services:
       dockerfile: sim.Dockerfile
     stdin_open: true
     network_mode: "host"
+    environment:
+      # env variables for the sim container
+      # Scenario: 0 for single car timed trial (qualifying), 1 for dual car racing (grand prix)
+      - RACE_SCENARIO=1
+      # ids for agents: EGO_ID is
+      - EGO_ID=ego_id
+      - OPP_ID=opp_id
+      - RACE_MAP_PATH=/f1tenth_gym/maps/berlin.yaml
+      - RACE_MAP_IMG_EXT=.png
+      - F1TENTH_EXEC_DIR=/f1tenth_gym/build/
 
   # Agent containers, in t he same network with the sim. Agent 1 and 2 are identical here, replace the dockerfile for your own agents
   agent1:

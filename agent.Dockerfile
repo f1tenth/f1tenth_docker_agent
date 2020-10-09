@@ -1,10 +1,11 @@
 # Base image
 FROM ros:melodic-robot-bionic
 
-# Update apt repo and pip2
+# Update apt repo and pip2, and install python3, pip3
 RUN apt-get update --fix-missing && \
-    apt-get install -y \
-    python-pip
+    apt-get install -y python-pip \
+                       python3-dev \
+                       python3-pip
 
 # Install apt dependencies, add your apt dependencies to this list
 RUN apt-get install -y git \
