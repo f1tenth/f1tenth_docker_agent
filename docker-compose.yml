@@ -14,11 +14,21 @@ services:
       # env variables for the sim container
       # Scenario: 0 for single car timed trial (qualifying), 1 for dual car racing (grand prix)
       - RACE_SCENARIO=1
-      # ids for agents: EGO_ID is
+      # ids for agents: EGO_ID is for YOUR agents in both qualifying AND grand prix. You'll need to assign your team's agent id to this when you submit.
       - EGO_ID=ego_id
+      # OPP_ID is ONLY for auto evaluation purposes, you DO NOT need to use the opp_id in your code
       - OPP_ID=opp_id
+      # map parameters, RACE_MAP_PATH for the corresponding yaml path, RACE_MAP_IMG_EXT is the extension of the image file in ROS convention, i.e. assuming the image file and the yaml file are in the same directory and has the same filename except for the file extension
       - RACE_MAP_PATH=/f1tenth_gym/maps/berlin.yaml
       - RACE_MAP_IMG_EXT=.png
+      # Starting pose for both of the cars, also a map parameter
+      - EGO_STARTING_X=0.0
+      - EGO_STARTING_Y=1.14
+      - EGO_STARTING_THETA=0.0
+      - OPP_STARTING_X=0,0
+      - OPP_STARTING_Y=-0.88
+      - OPP_STARTING_THETA=0.0
+      # the executable path of the C++ backend of gym, should NOT be changed unless you know what you're doing
       - F1TENTH_EXEC_DIR=/f1tenth_gym/build/
 
   # Agent containers, in t he same network with the sim. Agent 1 and 2 are identical here, replace the dockerfile for your own agents
