@@ -45,8 +45,6 @@ RUN pip install numpy==1.16.0 \
                 llvmlite==0.31.0 \
                 numba==0.47.0
 
-
-# RUN git clone https://github.com/f1tenth/f1tenth_gym
 RUN mkdir /f1tenth_gym
 COPY ./f1tenth_gym /f1tenth_gym
 
@@ -64,11 +62,9 @@ RUN /bin/bash -c "source /opt/ros/melodic/setup.bash; mkdir -p catkin_ws/src; cd
 
 RUN mkdir /catkin_ws/src/f1tenth_gym_ros
 
-COPY . /catkin_ws/src/f1tenth_gym_ros
+COPY ./f1tenth_gym_ros /catkin_ws/src/f1tenth_gym_ros
 
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash; cd catkin_ws; catkin_make; source devel/setup.bash"
 
 
 CMD ["/catkin_ws/src/f1tenth_gym_ros/start.sh"]
-
-# CMD ["roslaunch", "package file.launch"]

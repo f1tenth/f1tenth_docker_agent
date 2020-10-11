@@ -16,12 +16,15 @@ RUN apt-get install -y git \
                        ros-melodic-genpy
 
 # Upgrade pip
-RUN pip install --upgrade pip
+# RUN pip install --upgrade pip
 
 # Install pip dependencies, add your pip dependencies to this list
-RUN pip install numpy==1.16.0 \
-                scipy==1.2.0 \
-                pyyaml
+# RUN pip install numpy==1.16.0 \
+#                 scipy==1.2.0 \
+#                 pyyaml
+# RUN pip3 install numpy==1.16.0 \
+#                  scipy==1.2.0 \
+#                  pyyaml
 
 # Creating a catkin workspace
 RUN mkdir -p /catkin_ws/src
