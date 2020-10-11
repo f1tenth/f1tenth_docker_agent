@@ -6,7 +6,7 @@ services:
   sim:
     container_name: sim
     build:
-      context: ..
+      context: .
       dockerfile: sim.Dockerfile
     stdin_open: true
     network_mode: "host"
