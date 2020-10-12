@@ -42,4 +42,4 @@ RUN mkdir -p /catkin_ws/src
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash; cd catkin_ws; catkin_make; source devel/setup.bash"
 
 # Setting entry point command that runs when the container is brought up
-# CMD source /catkin_ws/devel/setup.bash; roslaunch --wait exp_pkg exp_launch.launch
+# CMD source /catkin_ws/devel/setup.bash; roslaunch --wait your_package your_launch.launch

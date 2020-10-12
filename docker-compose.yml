@@ -31,11 +31,12 @@ services:
       # the executable path of the C++ backend of gym, should NOT be changed unless you know what you're doing
       - F1TENTH_EXEC_DIR=/f1tenth_gym/build/
 
-  # Agent containers, in t he same network with the sim. Agent 1 and 2 are identical here, replace the dockerfile for your own agents
+  # Agent containers, in the same network with the sim. Agent 1 and 2 are identical here, replace the dockerfile for your own agents. For single vehicle timed trials, make sure that you're using only ONE agent that subscribes to the topics corresponded to EGO_ID. You can comment out the section for either agent1 or agent2 to make sure only one container runs.
   agent1:
     container_name: agent1
     build:
       context: .
+      # agent 1's corresponding Dockerfile
       dockerfile: agent.Dockerfile
     stdin_open: true
     network_mode: "host"
@@ -44,6 +45,7 @@ services:
     container_name: agent2
     build:
       context: .
+      # agent 2's corresponding Dockerfile
       dockerfile: agent.Dockerfile
     stdin_open: true
     network_mode: "host"

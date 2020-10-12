@@ -19,6 +19,8 @@ Currently, only docker on Ubuntu is officially tested and supported. To install 
 Compose is a tool for defining and running multi-container Docker applications. With Compose, you can use a YAML file to configure and bring up multiple Docker containers. This will become very handy when we need to configure and bring up the simulation container and the agent containers. You can install Compose following the steps [here](https://docs.docker.com/compose/install/) after you've installed the Docker engine.
 
 ## Creating your own agent Dockerfiles
+A template for an agent Dockerfile is provided as ```agent.Dockerfile``` from this repo.
+
 ### Base image
 The template Dockerfile pulls from the ```melodic-robot-bionic``` version of the official ROS docker image, which is based on an Ubuntu Bionic docker image. So make sure your dependencies support Ubuntu Bionic.
 
@@ -43,21 +45,33 @@ You could also use the ```RUN``` syntax to clone a Github repo of your package i
 ### Creating an entry point command
 Either ```CMD``` or ```ENTRYPOINT``` could be used to define an entrypoint command that gets executed when the container is brought up. You can find more detials on how the two commands interact [here](https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact).
 
-In the template dockerfile, ```CMD``` is used as an example to use a ROS launch file as the entry point command to the container.
+In the template dockerfile (commented out), ```CMD``` is used as an example to use a ROS launch file as the entry point command to the container. Depending on your code, you could either use a ros command (e.g. roslaunch), or a bash script to your liking.
 
 ## Setting up a race locally
 For all the benchmarks, we'll be using docker compose to configure and bring up the docker containers. You can find an overview of docker compose [here](https://docs.docker.com/compose/).
 
-To set up this repo to work with the ```f1tenth_gym_ros``` repo, clone this repo into the ```f1tenth_gym_ros``` directory. Then follow specific instructions in each of the following section to build and bring up the containers.
+This repo is set up to work with the ```f1tenth_gym_ros``` and the ```f1tenth_gym``` repos. The ```start.sh``` bash script will handle cloning and keeping these two repos up to date. For different benchmarks, environment variables have to be changed in ```docker-compose.yml```. Follow the specific instructions in each of the following section to build and bring up the containers. After you've changed the variables according to the benchmark that you're running, you could run ```start.sh``` to build and run the containers. Note that you might need ```sudo``` depending on your specific setup.
 
 ### Benchmark I: Single Vehicle Timed Trials
-To test this race scenario, you'll need to checkout the ```master``` branch of the ```f1tenth_gym_ros``` repo by running ```git checkout master``` in the ```f1tenth_gym_ros``` directory before you build the containers.
+To use this race scenario, you'll need to change the ```RACE_SCENARIO``` variable in ```docker-compose.yml``` to 0. Note that only the topics corresponding to ```EGO_ID``` should be used in this benchmark.
 
 ### Benchmark II: Single Vehicle Obstacle Avoidance
-For this scenario, you can follow all the steps mentioned in Benchmark I, and add in a step to change the map used in the simulation following the steps mentioned [here](https://github.com/f1tenth/f1tenth_gym_ros#changing-maps) before you build and bring up the containers.
+For this scenario, you'll also need to change the ```RACE_SCENARIO``` variable in ```docker-compose.yml``` to 0. Additionally, you'll have to change the default map to a map with obstacles. Note that only the topics corresponding to ```EGO_ID``` should be used in this benchmark.
 
 ### Benchmark III: Two Vehicle Head-to-head
-To test this race scenario, you'll need to checkout the ```multi_node``` branch of the ```f1tenth_gym_ros``` repo by running ```git checkout multi_node``` in the ```f1tenth_gym_ros``` directory before you build the containers.
+To use this race scenario, you'll need to change the ```RACE_SCENARIO``` variable in ```docker-compose.yml``` to 1.
+
+### Changing the map
+You can change the map that the sim uses by changing the ```RACE_MAP_PATH``` and the ```RACE_MAP_IMG_EXT``` variables accordingly. Keep in mind that this variable is the path to the map **inside** the sim docker container. The easiest way to add a map and to avoid changing the Dockerfile is to put the map image and yaml file into the ```maps``` directory of ```f1tenth_gym_ros``` that's cloned by ```start.sh```.
+
+### Available topics
+The easiest way to check the available topics is to run ```rostopic list``` after you've ran ```start.sh```.
+
+### Adding an agent
+After you follow the steps mentioned [here](https://github.com/f1tenth/f1tenth_docker_agent#creating-your-own-agent-dockerfiles), you can change the dockerfile used in ```docker-compose.yml``` for services ```agent1``` and ```agent2```. Make sure that your code subscribe to the correct topics determined by the ```EGO_ID``` and ```OPP_ID``` environment variables in ```docker-compose.yml```. For example, by default, the available topics are ```/ego_id/scan``` etc. When your agent is evaluated against other agents, the race will have two rollouts where the starting position of the cars are flipped by flipping ```EGO_ID``` and ```OPP_ID```. Note that the starting poses set in the environment variables will NOT be changed during the race, only the starting position of the cars are flipped. 
+
+### Starting the race and visualization
+You can start RVIZ on your host system by running ```roscore``` in one terminal, and ```rviz``` in another terminal. Once the GUI shows up, you can load a RVIZ config by *File* -> *Open Config*, and then select ```your_path_to/f1tenth_docker_agent/f1tenth_gym_ros/launch/gym_bridge.rviz```. And to start the race once you have the agents containers set, run ```start.sh```.
 
 ## Submitting your agent
 ### Setting up DockerHub
@@ -70,4 +84,4 @@ You could also set up automated builds following the guide [here](https://docs.d
 Note that with automated builds, your Dockerfile is transparent on public repositories to other users. If you wish to have your source code hidden, use ```docker push```.
 
 ### Submitting your docker image
-A submission portal (for IROS 2020) will be open at [this event page](https://iros2020.f1tenth.org). You'll need to provide to assigned unique submission passcode and your DockerHub repo link.
+A submission portal (for IROS 2020) will be open at [this event page](https://iros2020.f1tenth.org). You'll need to provide your assigned unique submission passcode, your DockerHub repo link, and the unique agent id that will be used in assigning ROS topic names.
