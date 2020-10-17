@@ -41,5 +41,8 @@ RUN mkdir -p /catkin_ws/src
 # Building your ROS packages
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash; cd catkin_ws; catkin_make; source devel/setup.bash"
 
+# Uncomment set the shell to bash to provide the "source" command
+# SHELL ["/bin/bash", "-c"] 
+
 # Setting entry point command that runs when the container is brought up
 # CMD source /catkin_ws/devel/setup.bash; roslaunch --wait your_package your_launch.launch
